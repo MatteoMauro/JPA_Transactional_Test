@@ -1,12 +1,15 @@
 # @Transactional nei test
+## Obiettivo
+Indagare il comportamento dell'annotazione @Transactional nel caso REQUIRED e REQUIRES_NEW. Capire come si influenzano a vicenda nel caso di integratio test.
+
 ## Descrizione
 La classe _TabellaService_ espone due metodi per salvare una entity:
 <pre>
 - save():            annotato con @Transactional(propagation = Propagation.REQUIRED)
 - saveRequiresNew(): annotato con @Transactional(propagation = Propagation.REQUIRES_NEW)
 </pre>
-La classe di integration test _TabellaIT_ espone il funzionamento dei metodi di salvataggio di _TabellaService_, in concomitanza con _@Transactional_ a livello di IT.\
-Ogni test presenta una chiamata a _testSubject_ e successivamente il recupero di tutti i record presenti nella tabella.
+La classe di integration test _TabellaIT_ utilizza i metodi di salvataggio di _TabellaService_, in concomitanza con _@Transactional_ a livello di IT.\
+Ogni test esegue una chiamata a _testSubject_ e successivamente recupera tutti i record presenti nella tabella.
 
 > Caso metodo REQUIRED\
 ![img_10.png](img_10.png)
@@ -14,6 +17,7 @@ Ogni test presenta una chiamata a _testSubject_ e successivamente il recupero di
 > Caso metodo REQUIRES_NEW\
 ![img_11.png](img_11.png)
 
+Note:\
 I test possono essere ordinati tramite `@Order(<ordine>)`.\
 Ogni test esegue inizialmente lo script "_save.sql_" che inserisce il seguente record:\
 `record = {id: '2afd47ac-cd75-4389-b6c5-d84dd2966fc0', name:'Pippo', description: 'Record saved through script'}`
