@@ -19,15 +19,15 @@ Ogni test esegue inizialmente lo script "_save.sql_" che inserisce il seguente r
 `record = {id: '2afd47ac-cd75-4389-b6c5-d84dd2966fc0', name:'Pippo', description: 'Record saved through script'}`
 
 ## Risultati
-###1. Save REQUIRED - Test metodo @Transactional
+### 1. Save REQUIRED - Test metodo @Transactional
 Se il metodo di test è transazionale (transazione T1) e il salvataggio di un record avviene nella stessa transazione, tale record viene recuperato correttamente all'interno di T1.
 
 ![img_8.png](img_8.png)
-###2. Save REQUIRES_NEW - Test metodo @Transactional
+### 2. Save REQUIRES_NEW - Test metodo @Transactional
 Se il metodo di test è transazionale (_transazione padre_ T1) e il salvataggio di un record avviene in una nuova transazione (_transazione figlia_ T2, REQUIRES_NEW), tale record viene recuperato correttamente nella transazione padre T1.
 
 ![img_7.png](img_7.png)
-###3. Metodo del test NON @Transactional
+### 3. Metodo del test NON @Transactional
 Se un metodo del test NON è annotato con _@Transactional_, il database non viene rollbackato al termine del test e quelli successivi possono essere influenzati
 
 > 1° caso\
@@ -40,7 +40,7 @@ Nel 2° caso, il test #2 fallisce durante l'esecuzione dello script "_save.sql_"
 `Caused by: org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException: Unique index or primary key violation`\
 `INSERT INTO tabella (id, name, description) VALUES ('2afd47ac-cd75-4389-b6c5-d84dd2966fc0', 'Pippo', Record saved through script')`
 
-###4. I dati inseriti in REQUIRES_NEW non vengono rollbackati
+### 4. I dati inseriti in REQUIRES_NEW non vengono rollbackati
 Se si esegue un metodo di test transazionale T1 che richiama una nuova transazione T2, allora vengono rollbackati solo i dati isneriti da T1 e non quelli di T2.
 
 ![img_12.png](img_12.png)
